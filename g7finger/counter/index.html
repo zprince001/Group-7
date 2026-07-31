@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Finger Counter — Gesture Studio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;590;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../shared.css" />
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="glass-atmosphere"></div>
+
+  <a href="../index.html" class="back-link glass-pill">← Gesture Studio</a>
+
+  <main class="app-shell">
+    <section class="hero-card">
+
+      <div class="hero-copy glass-panel">
+        <span class="glass-pill">✋ Live Hand Tracking</span>
+        <h1>Finger Counter</h1>
+
+        <div class="credit-strip">
+          <span class="credit-label">Group</span>
+          <div class="credit-names">
+            <span>Ye Yint Aung</span><span>Aung Pyae Sone</span><span>Myo Min Khant</span>
+            <span>May Jue Jue Hlaing</span><span>Khine Myo Myat</span>
+          </div>
+        </div>
+
+        <!-- <p class="lead">Real-time finger counting and gesture recognition — fully on-device.</p> -->
+
+        <div class="controls">
+          <button id="startBtn" class="btn-glass-primary">Start Camera</button>
+          <button id="stopBtn" class="btn-glass-ghost" disabled>Stop Camera</button>
+        </div>
+
+        <div class="stats-grid">
+          <article class="stat-box big-count glass-panel">
+            <span class="stat-label">Finger Count</span>
+            <strong id="fingerCount">0</strong>
+          </article>
+          <article class="stat-box glass-panel"><span class="stat-label">Hands</span><strong id="handsCount">0</strong></article>
+          <article class="stat-box glass-panel"><span class="stat-label">Status</span><strong id="statusText">Ready</strong></article>
+        </div>
+
+        <p id="errorText" class="error-text"></p>
+
+        <div id="gestureBanner" class="gesture-banner glass-panel hidden">
+          <span id="gestureEmoji" class="gesture-emoji">👋</span>
+          <span id="gestureLabel" class="gesture-label">Gesture</span>
+        </div>
+      </div>
+
+      <div class="camera-card glass-panel">
+        <div class="camera-topbar">
+          <span class="dot red"></span><span class="dot yellow"></span><span class="dot green"></span>
+          <span class="camera-title">Live Preview</span>
+        </div>
+        <div class="camera-stage">
+          <div class="mirror-layer">
+            <video id="video" autoplay playsinline muted></video>
+            <canvas id="overlay"></canvas>
+          </div>
+          <div id="cameraPlaceholder" class="camera-placeholder">Tap <strong>Start Camera</strong> to begin.</div>
+        </div>
+
+        <ul class="gesture-legend">
+          <li>👍 Thumbs Up</li><li>✌️ Peace</li><li>🤟 I Love You</li><li>🤙 Call Me</li><li>👌 OK</li>
+          <li>🤘 Rock On</li><li>☝️ Pointing</li><li>✊ Fist</li><li>🖐️ High Five</li><li>❤️ Finger Heart</li>
+        </ul>
+      </div>
+    </section>
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js" crossorigin="anonymous"></script>
+  <script src="script.js"></script>
+</body>
+</html>

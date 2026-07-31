@@ -1,0 +1,183 @@
+/* ============================================================
+   Shared "Liquid Glass" design system — WHITE / light variant
+   Apple-style frosted specular glass on a bright, airy base:
+   soft daylight ambience, white translucent panels, layered
+   blur + rim highlight + moving sheen, one blue->violet accent.
+   ============================================================ */
+
+:root {
+  --bg-0: #eef1f6;
+  --bg-1: #e4e9f2;
+  --ink: #1c1c1e;
+  --ink-dim: #58585f;
+  --ink-faint: #8a8a90;
+
+  --accent-1: #0a84ff;   /* Apple system blue */
+  --accent-2: #5e5ce6;   /* Apple system indigo */
+  --accent-mint: #248a3d; /* Apple system green, darkened for AA on white */
+  --accent-warn: #d70015; /* Apple system red, darkened for AA on white */
+
+  --glass-fill: rgba(255, 255, 255, 0.55);
+  --glass-fill-strong: rgba(255, 255, 255, 0.72);
+  --glass-border: rgba(255, 255, 255, 0.8);
+  --glass-border-bright: rgba(255, 255, 255, 0.95);
+  --glass-shadow: rgba(60, 70, 110, 0.16);
+
+  --radius-lg: 28px;
+  --radius-md: 20px;
+  --radius-sm: 14px;
+
+  --ease-glass: cubic-bezier(.22, 1, .36, 1);
+}
+
+* { box-sizing: border-box; }
+html, body { margin: 0; padding: 0; }
+
+body {
+  font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+  background: var(--bg-0);
+  color: var(--ink);
+  -webkit-font-smoothing: antialiased;
+  letter-spacing: -0.01em;
+}
+
+/* ---------- Ambient daylight background ----------
+   Soft pastel pools of light on an off-white field — the way
+   frosted glass panels sit in a bright, sunlit Apple keynote render. */
+.glass-atmosphere {
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  background:
+    radial-gradient(55% 45% at 15% 0%, rgba(10, 132, 255, 0.16), transparent 65%),
+    radial-gradient(45% 38% at 88% 12%, rgba(94, 92, 230, 0.14), transparent 60%),
+    radial-gradient(60% 50% at 50% 105%, rgba(255, 255, 255, 0.9), transparent 70%),
+    linear-gradient(180deg, var(--bg-0), var(--bg-1));
+}
+
+/* ---------- Core glass surface ----------
+   Three stacked layers create the "specular" read on white:
+   1) bright translucent fill  2) crisp top-edge highlight (light
+   catching the rim)  3) soft diffuse shadow for lift off the page. */
+.glass-panel {
+  position: relative;
+  background: var(--glass-fill);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-lg);
+  backdrop-filter: blur(28px) saturate(180%);
+  -webkit-backdrop-filter: blur(28px) saturate(180%);
+  box-shadow:
+    inset 0 1px 0 rgba(255, 255, 255, 0.9),
+    inset 0 0 0 1px rgba(255, 255, 255, 0.4),
+    0 20px 45px var(--glass-shadow);
+}
+
+/* Moving specular sheen — a bright band that drifts across the glass,
+   the way a curved acrylic surface catches daylight as you move past it. */
+.glass-panel::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: linear-gradient(
+    115deg,
+    transparent 30%,
+    rgba(255, 255, 255, 0.35) 45%,
+    rgba(255, 255, 255, 0.55) 50%,
+    rgba(255, 255, 255, 0.35) 55%,
+    transparent 70%
+  );
+  background-size: 250% 250%;
+  background-position: 100% 0%;
+  opacity: 0;
+  transition: opacity .4s ease;
+  pointer-events: none;
+}
+.glass-panel.sheen-active::before,
+.glass-panel:hover::before {
+  opacity: 1;
+  animation: sheenDrift 2.6s var(--ease-glass);
+}
+@keyframes sheenDrift {
+  from { background-position: 130% 0%; }
+  to   { background-position: -30% 100%; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .glass-panel::before { display: none; }
+}
+
+.glass-pill {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--glass-fill-strong);
+  border: 1px solid var(--glass-border);
+  border-radius: 999px;
+  padding: 8px 16px;
+  font-size: .82rem;
+  font-weight: 590;
+  color: var(--ink);
+  backdrop-filter: blur(20px);
+  box-shadow: 0 6px 16px rgba(60, 70, 110, 0.1);
+}
+
+/* ---------- Buttons ---------- */
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  transition: transform .18s var(--ease-glass), opacity .18s ease, box-shadow .18s ease;
+}
+button:disabled { cursor: not-allowed; opacity: .4; }
+button:active:not(:disabled) { transform: scale(0.97); }
+button:focus-visible {
+  outline: 2px solid var(--accent-1);
+  outline-offset: 2px;
+}
+
+.btn-glass-primary {
+  color: #fff;
+  background: linear-gradient(135deg, var(--accent-1), var(--accent-2));
+  border-radius: var(--radius-sm);
+  padding: 13px 22px;
+  font-size: .95rem;
+  font-weight: 590;
+  box-shadow: 0 14px 28px rgba(10, 132, 255, 0.3), inset 0 1px 0 rgba(255,255,255,0.4);
+}
+.btn-glass-primary:hover:not(:disabled) { transform: translateY(-1px); }
+
+.btn-glass-ghost {
+  color: var(--ink);
+  background: var(--glass-fill-strong);
+  border: 1px solid var(--glass-border);
+  border-radius: var(--radius-sm);
+  padding: 13px 22px;
+  font-size: .95rem;
+  font-weight: 590;
+  backdrop-filter: blur(20px);
+  box-shadow: 0 6px 16px rgba(60, 70, 110, 0.08);
+}
+.btn-glass-ghost:hover:not(:disabled) { background: #ffffff; }
+
+/* ---------- Typography scale ---------- */
+h1, h2, h3 { margin: 0; font-weight: 700; letter-spacing: -0.02em; color: var(--ink); }
+p { margin: 0; }
+
+/* ---------- Focus ring for gesture cursor (used by control page) ---------- */
+.gesture-focused {
+  box-shadow: 0 0 0 2px var(--accent-1), 0 0 26px rgba(10, 132, 255, 0.35) !important;
+}
+.gesture-clicked { animation: gestureClick .32s var(--ease-glass); }
+@keyframes gestureClick {
+  0% { transform: scale(0.96); }
+  55% { transform: scale(1.03); }
+  100% { transform: scale(1); }
+}
+
+::selection { background: rgba(10, 132, 255, 0.25); }
+
+/* Scrollbar, quiet */
+::-webkit-scrollbar { width: 10px; }
+::-webkit-scrollbar-thumb { background: rgba(20, 20, 30, 0.15); border-radius: 8px; }
+::-webkit-scrollbar-track { background: transparent; }

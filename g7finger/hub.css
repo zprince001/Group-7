@@ -1,0 +1,98 @@
+.hub-shell {
+  position: relative;
+  z-index: 1;
+  min-height: 100vh;
+  max-width: 1100px;
+  margin: 0 auto;
+  padding: 8vh 24px 6vh;
+  display: flex;
+  flex-direction: column;
+  gap: 6vh;
+}
+
+.hub-header { max-width: 640px; }
+.hub-header h1 {
+  font-size: clamp(2.2rem, 5vw, 3.4rem);
+  line-height: 1.06;
+  margin: 20px 0 16px;
+}
+.hub-sub {
+  color: var(--ink-dim);
+  font-size: 1.05rem;
+  line-height: 1.6;
+  max-width: 52ch;
+}
+
+.tile-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 22px;
+}
+
+.tile {
+  display: flex;
+  flex-direction: column;
+  padding: 34px;
+  text-decoration: none;
+  color: var(--ink);
+  min-height: 320px;
+  overflow: hidden;
+  transition: transform .28s var(--ease-glass), border-color .28s ease;
+}
+.tile:hover {
+  transform: translateY(-4px);
+  border-color: var(--glass-border-bright);
+}
+
+.tile-icon-wrap {
+  width: 56px; height: 56px;
+  border-radius: 16px;
+  display: flex; align-items: center; justify-content: center;
+  background: linear-gradient(135deg, rgba(10,132,255,0.25), rgba(94,92,230,0.25));
+  border: 1px solid var(--glass-border-bright);
+  margin-bottom: 22px;
+}
+.tile-icon { font-size: 1.6rem; }
+
+.tile-eyebrow {
+  font-size: .74rem; font-weight: 700; letter-spacing: .1em; text-transform: uppercase;
+  color: var(--ink-faint);
+  margin-bottom: 10px;
+}
+
+.tile h2 { font-size: 1.5rem; margin-bottom: 12px; }
+.tile-desc {
+  color: var(--ink-dim);
+  font-size: .92rem;
+  line-height: 1.6;
+  flex: 1;
+}
+
+.tile-cta {
+  display: inline-flex; align-items: center; gap: 6px;
+  font-size: .88rem; font-weight: 590;
+  color: var(--ink);
+  margin-top: 18px;
+}
+.tile .arrow { transition: transform .22s var(--ease-glass); }
+.tile:hover .arrow { transform: translateX(4px); }
+
+.hub-footer {
+  display: flex; align-items: center; gap: 16px; flex-wrap: wrap;
+  padding-top: 18px;
+  border-top: 1px solid var(--glass-border);
+  font-size: .8rem; color: var(--ink-faint);
+}
+.hub-footer > span:first-child {
+  font-weight: 700; text-transform: uppercase; letter-spacing: .08em; color: var(--ink-dim);
+  font-size: .7rem;
+}
+.credit-row { display: flex; gap: 14px; flex-wrap: wrap; }
+.credit-row span {
+  color: var(--ink-dim);
+}
+
+@media (max-width: 760px) {
+  .tile-grid { grid-template-columns: 1fr; }
+  .hub-shell { padding: 6vh 20px 5vh; gap: 5vh; }
+}

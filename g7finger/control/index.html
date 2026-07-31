@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Gesture Control — Gesture Studio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;590;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="../shared.css" />
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+  <div class="glass-atmosphere"></div>
+
+  <a href="../index.html" class="back-link glass-pill">← Gesture Studio</a>
+
+  
+  <div id="camWidget" class="cam-widget glass-panel collapsed">
+    <div class="cam-widget-head">
+      <span class="cam-dot"></span>
+      <span class="cam-title">Gesture Control</span>
+      <button id="camToggle" class="cam-toggle" aria-label="Toggle camera">⌄</button>
+    </div>
+    <div class="cam-body">
+      <div class="cam-stage">
+        <div class="cam-mirror">
+          <video id="video" autoplay playsinline muted></video>
+          <canvas id="overlay"></canvas>
+        </div>
+        <div id="camPlaceholder" class="cam-placeholder">Camera off</div>
+      </div>
+      <div class="cam-controls">
+        <button id="startBtn" class="cam-btn on">Start</button>
+        <button id="stopBtn" class="cam-btn off" disabled>Stop</button>
+      </div>
+      <p id="errorText" class="cam-error"></p>
+      <div class="cam-legend">
+        <div><strong>🤙</strong> Next section</div>
+        <div><strong>🤟</strong> Previous section</div>
+        <div><strong>☝️</strong> Move focus</div>
+        <div><strong>👍</strong> Select / Click</div>
+        <div><strong>✌️</strong> Next photo</div>
+        <div><strong>✊</strong> Previous photo</div>
+      </div>
+    </div>
+  </div>
+
+
+  <div id="gestureToast" class="gesture-toast glass-panel hidden">
+    <span id="gestureToastEmoji">👋</span>
+    <span id="gestureToastLabel">Gesture</span>
+  </div>
+
+  
+  <nav class="page-dots" aria-label="Section navigation">
+    <button class="page-dot active" data-section="0" aria-label="Home"></button>
+    <button class="page-dot" data-section="1" aria-label="Gallery"></button>
+    <button class="page-dot" data-section="2" aria-label="Links"></button>
+    <button class="page-dot" data-section="3" aria-label="Contact"></button>
+  </nav>
+
+  
+  <main id="sectionTrack" class="section-track">
+
+    
+    <section class="page-section" data-index="0" id="section-home">
+      <div class="section-inner">
+        <span class="glass-pill">🖐️ Hands-Free Navigation</span>
+        <h1>Control this page<br/>with your hand.</h1>
+        <p class="lead">
+          No mouse. No keyboard. Point to move, thumbs-up to select, and swipe
+          gestures to flip through photos — all tracked live by your webcam.
+        </p>
+        <button class="cta focusable" data-action="goto-gallery">Enter the Gallery →</button>
+
+        <div class="hint-row">
+          <div class="hint-card glass-panel"><span class="hint-emoji">🤙</span><span>Next section</span></div>
+          <div class="hint-card glass-panel"><span class="hint-emoji">☝️</span><span>Move focus</span></div>
+          <div class="hint-card glass-panel"><span class="hint-emoji">👍</span><span>Select</span></div>
+        </div>
+      </div>
+    </section>
+
+    
+    <section class="page-section" data-index="1" id="section-gallery">
+      <div class="section-inner">
+        <span class="glass-pill">🖼️ Gallery</span>
+        <h2>Swipe with a gesture</h2>
+        <p class="lead">✌️ Peace for next photo &nbsp;·&nbsp; ✊ Fist for previous photo</p>
+
+        <div class="photo-frame">
+          <button class="photo-arrow glass-panel focusable" id="photoPrev" aria-label="Previous photo">‹</button>
+          <div class="photo-view glass-panel">
+            <img id="galleryImg" src="" alt="Gallery photo" />
+            <span id="galleryCaption" class="photo-caption"></span>
+          </div>
+          <button class="photo-arrow glass-panel focusable" id="photoNext" aria-label="Next photo">›</button>
+        </div>
+
+        <div class="photo-dots" id="photoDots"></div>
+      </div>
+    </section>
+
+   
+    <section class="page-section" data-index="2" id="section-links">
+      <div class="section-inner">
+        <span class="glass-pill">🔗 Links</span>
+        <h2>Point, then thumbs-up to open</h2>
+        <p class="lead">Move focus between cards with ☝️, then 👍 to select the highlighted one.</p>
+
+        <div class="link-grid">
+          <a href="https://developers.google.com/mediapipe" target="_blank" rel="noopener" class="link-card glass-panel focusable">
+            <span class="link-emoji">🖐️</span>
+            <span class="link-title">MediaPipe Docs</span>
+            <span class="link-desc">The hand-tracking model behind this project</span>
+          </a>
+          <a href="https://developer.mozilla.org/en-US/docs/Web/API/MediaDevices/getUserMedia" target="_blank" rel="noopener" class="link-card glass-panel focusable">
+            <span class="link-emoji">🎥</span>
+            <span class="link-title">Camera Web API</span>
+            <span class="link-desc">How browsers access your webcam</span>
+          </a>
+          <a href="https://developer.mozilla.org/en-US/docs/Web/API/Canvas_API" target="_blank" rel="noopener" class="link-card glass-panel focusable">
+            <span class="link-emoji">🎨</span>
+            <span class="link-title">Canvas API</span>
+            <span class="link-desc">Used to draw the hand skeleton overlay</span>
+          </a>
+          <a href="#section-contact" class="link-card glass-panel focusable" data-action="goto-contact">
+            <span class="link-emoji">✉️</span>
+            <span class="link-title">Contact the Team</span>
+            <span class="link-desc">Jump to the contact section</span>
+          </a>
+        </div>
+      </div>
+    </section>
+
+    
+    <section class="page-section" data-index="3" id="section-contact">
+      <div class="section-inner">
+        <span class="glass-pill">👥 Group</span>
+        <h2>Made by</h2>
+        <ul class="credit-list">
+          <li class="glass-panel focusable">Ye Yint Aung</li>
+          <li class="glass-panel focusable">Aung Pyae Sone</li>
+          <li class="glass-panel focusable">Myo Min Khant</li>
+          <li class="glass-panel focusable">May Jue Jue Hlaing</li>
+          <li class="glass-panel focusable">Khine Myo Myat</li>
+        </ul>
+        <button class="cta focusable" data-action="goto-home">↺ Back to Start</button>
+      </div>
+    </section>
+
+  </main>
+
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/camera_utils/camera_utils.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/drawing_utils/drawing_utils.js" crossorigin="anonymous"></script>
+  <script src="https://cdn.jsdelivr.net/npm/@mediapipe/hands/hands.js" crossorigin="anonymous"></script>
+  <script src="script.js"></script>
+</body>
+</html>
